@@ -1,5 +1,8 @@
 package org.launchcode.codingevents.models;
 
+import jakarta.validation.constraints.*;
+
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -10,15 +13,44 @@ public class Event {
     private int id;
     private static int nextId = 1;
 
+    @NotBlank(message = "Name is required.")
+    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String name;
+
+    @Size(max = 500, message = "Description too long!")
     private String description;
 
-    public Event(String name, String description) {
+    @NotBlank(message = "Email is required.")
+    @Email(message = "Invalid email. Try again.")
+    private String contactEmail;
+
+//    Chapter Exercise Code Added
+    @NotBlank(message = "Location is required.")
+    @NotNull
+    private String location;
+
+    @AssertTrue(message = "Registration must be marked 'True'.")
+    private Boolean registrationRequired = true;
+
+    @Positive(message = "Attendees must be greater than 0.")
+    private int numberOfAttendees;
+
+    @Future(message = "Event must have a future date.")
+    private LocalDate eventDate;
+
+    public Event(String name, String description, String contactEmail,
+                 String location, int numberOfAttendees, LocalDate eventDate) {
         this.name = name;
         this.description = description;
+        this.contactEmail = contactEmail;
+        this.location = location;
+        this.numberOfAttendees = numberOfAttendees;
+        this.eventDate = eventDate;
         this.id = nextId;
         nextId++;
     }
+
+    public Event(){}
 
     public String getName() {
         return name;
@@ -36,8 +68,48 @@ public class Event {
         this.description = description;
     }
 
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation (String location) {
+        this.location = location;
+    }
+
     public int getId() {
         return id;
+    }
+
+    public Boolean getRegistrationRequired() {
+        return registrationRequired;
+    }
+
+    public void setRegistrationRequired(Boolean registrationRequired) {
+        this.registrationRequired = registrationRequired;
+    }
+
+    public int getNumberOfAttendees() {
+        return numberOfAttendees;
+    }
+
+    public void setNumberOfAttendees(int numberOfAttendees) {
+        this.numberOfAttendees = numberOfAttendees;
+    }
+
+    public LocalDate getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(LocalDate eventDate) {
+        this.eventDate = eventDate;
     }
 
     @Override

@@ -38,19 +38,24 @@ public class Event {
     @Future(message = "Event must have a future date.")
     private LocalDate eventDate;
 
+    private EventType type;
+
     public Event(String name, String description, String contactEmail,
-                 String location, int numberOfAttendees, LocalDate eventDate) {
+                 String location, int numberOfAttendees, LocalDate eventDate, EventType type) {
+        this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
         this.location = location;
         this.numberOfAttendees = numberOfAttendees;
         this.eventDate = eventDate;
+        this.type = type;
+    }
+
+    public Event(){
         this.id = nextId;
         nextId++;
     }
-
-    public Event(){}
 
     public String getName() {
         return name;
@@ -110,6 +115,14 @@ public class Event {
 
     public void setEventDate(LocalDate eventDate) {
         this.eventDate = eventDate;
+    }
+
+    public EventType getType() {
+        return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
     }
 
     @Override
